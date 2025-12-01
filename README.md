@@ -1,6 +1,7 @@
 ## 💰 ControleJá - Interface Web
 
-![ControleJá Banner](public/ControleJa.png)
+<img width="1536" height="1024" alt="ChatGPT Image 1 de dez  de 2025, 18_43_20" src="https://github.com/user-attachments/assets/746bb9fe-93de-4e2b-909b-3557bd5d3339" />
+
 
 Aplicação frontend para controle financeiro pessoal e de pequenos negócios, construída com React, TypeScript e Vite.
 Permite visualizar saldo, receitas, despesas, categorias e relatórios gráficos de forma simples e intuitiva.
