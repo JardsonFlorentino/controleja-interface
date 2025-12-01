@@ -10,7 +10,7 @@ Permite visualizar saldo, receitas, despesas, categorias e relatórios gráficos
 ## 🌐 Aplicação Online
 **🔗 Site:** [https://controleja.jardsonflorentino.com.br/](https://controleja.jardsonflorentino.com.br/)
 
----
+
 
 ## 📝 Descrição
 
@@ -24,7 +24,6 @@ O projeto foi desenvolvido como parte do curso Full Stack do DevClub, com foco e
 - Integração com API própria (backend Fastify + Prisma)
 - Autenticação via Firebase (quando configurada)
 
----
 
 ## 🚀 Funcionalidades (Frontend)
 
@@ -53,7 +52,6 @@ O projeto foi desenvolvido como parte do curso Full Stack do DevClub, com foco e
 - Tema escuro moderno
 - Interface otimizada para desktop e uso em notebooks
 
----
 
 ## 🛠️ Stack Tecnológica (Frontend)
 React 19.x – Biblioteca para construção da interface
@@ -67,7 +65,6 @@ React 19.x – Biblioteca para construção da interface
 - React Toastify – Notificações (sucesso/erro)
 - Recharts – Gráficos (pizza, barras) para relatórios
 
----
 
 ## 📦 Instalação Local (Frontend)
 
@@ -78,3 +75,59 @@ Pré-requisitos
 - Backend do ControleJá rodando localmente (API)
 
 Passos
+
+```bash
+# Clonar o repositório da interface
+git clone https://github.com/SEU_USUARIO/controleja-interface.git
+cd controleja-interface
+
+# Instalar dependências
+npm install
+# ou
+yarn install
+
+# Criar arquivo de ambiente
+cp .env.example .env
+# Edite o .env com a URL da API, por exemplo:
+# VITE_API_URL=http://localhost:3333
+
+# Rodar ambiente de desenvolvimento
+npm run dev
+# ou
+yarn dev
+```
+
+Depois disso, acesse o endereço mostrado no terminal (geralmente http://localhost:5173).
+
+## 📁 Estrutura de Pastas (Frontend)
+
+Exemplo de estrutura do projeto:
+
+```bash
+src/
+├── components/           # Componentes reutilizáveis (Card, MonthYearSelect, Navbar, etc.)
+├── pages/                # Páginas principais (Dashboard, Transactions, Landing)
+├── services/             # Comunicação com a API (axios, transactionService)
+├── types/                # Tipagens (Transaction, Category, Summary)
+├── utils/                # Utilitários (formatCurrency, formatDate, helpers)
+├── hooks/                # (Opcional) custom hooks
+├── routes/               # Configuração de rotas (React Router)
+└── main.tsx              # Entrada da aplicação
+```
+
+## 🔗 Repositórios Relacionados
+
+Frontend: controleja-interface (este repositório)
+
+Backend: https://github.com/JardsonFlorentino/devbills---api
+
+## 🙋‍♂️ Autor
+
+**Jardson Florentino**
+
+Desenvolvedor Full Stack | DevClub Student
+
+- 💼 [LinkedIn](https://www.linkedin.com/in/jardsonflorentino)
+- 🐙 [GitHub](https://github.com/JardsonFlorentino)
+- 📧 Email: <jardsonflorentino@gmail.com>
+
