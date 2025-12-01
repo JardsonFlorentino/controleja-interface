@@ -126,7 +126,7 @@ Backend: [https://github.com/JardsonFlorentino/controleja-api](https://github.co
 
 **Jardson Florentino**
 
-Desenvolvedor Full Stack | DevClub Student
+Desenvolvedor Full Stack
 
 - 💼 [LinkedIn](https://www.linkedin.com/in/jardsonflorentino)
 - 🐙 [GitHub](https://github.com/JardsonFlorentino)
