@@ -42,6 +42,13 @@ const initialSummary: TransactionSummary = {
   expensesByCategory: [],
 };
 
+type ExpenseByCategory = {
+  categoryId: string;
+  categoryName: string;
+  categoryColor: string;
+  amount: number;
+};
+
 const Dashboard = () => {
   const currentDate = new Date();
   const [year, setYear] = useState<number>(currentDate.getFullYear());
@@ -52,7 +59,13 @@ const Dashboard = () => {
   useEffect(() => {
     async function loadTransactionsSummary() {
       const response = await getTransactionsSummary(month, year);
-      setSummary(response);
+
+      setSummary({
+        ...response,
+        expensesByCategory: Array.isArray(response.expensesByCategory)
+          ? response.expensesByCategory
+          : [],
+      });
     }
 
     loadTransactionsSummary();
@@ -61,7 +74,9 @@ const Dashboard = () => {
   useEffect(() => {
     async function loadTransactionsMonthly() {
       const response = await getTransactionsMonthly(month, year, 5);
-      setMonthlyItemData(response.history);
+      setMonthlyItemData(
+        Array.isArray(response.history) ? response.history : [],
+      );
     }
 
     loadTransactionsMonthly();
@@ -76,7 +91,13 @@ const Dashboard = () => {
     return formatCurrency(typeof value === "number" ? value : 0);
   };
 
-  const pieData = summary.expensesByCategory as unknown as any[];
+  const expensesByCategory: ExpenseByCategory[] = Array.isArray(
+    summary.expensesByCategory,
+  )
+    ? (summary.expensesByCategory as ExpenseByCategory[])
+    : [];
+
+  const pieData: ExpenseByCategory[] = expensesByCategory;
 
   return (
     <div className="container-app py-6">
@@ -153,7 +174,7 @@ const Dashboard = () => {
           className="min-h-80"
           hover
         >
-          {summary.expensesByCategory.length > 0 ? (
+          {expensesByCategory.length > 0 ? (
             <div className="h-72 mt-4">
               <ResponsiveContainer>
                 <PieChart>
@@ -168,7 +189,7 @@ const Dashboard = () => {
                     nameKey="categoryName"
                     label={renderPieChartLabel}
                   >
-                    {summary.expensesByCategory.map((entry) => (
+                    {expensesByCategory.map((entry) => (
                       <Cell
                         key={entry.categoryId}
                         fill={entry.categoryColor}

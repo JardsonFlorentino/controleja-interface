@@ -85,6 +85,7 @@ const Header = () => {
                 </span>
                 <button
                   type="button"
+                  aria-label="Sair"
                   onClick={handleSingOut}
                   className="hover:text-red-300 hover:bg-red-500 p-2 rounded-full transition-colors cursor-pointer"
                 >
