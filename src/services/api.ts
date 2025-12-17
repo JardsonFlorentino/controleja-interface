@@ -5,7 +5,8 @@ import axios, {
 import { firebaseAuth } from "../config/firebase";
 
 const rawUrl = import.meta.env.VITE_API_URL.replace(/\/$/, "");
-const BASE_URL_WITH_PREFIX = `${rawUrl}/api`;
+// sem /api
+const BASE_URL_WITH_PREFIX = rawUrl;
 
 export const api: AxiosInstance = axios.create({
   baseURL: BASE_URL_WITH_PREFIX,
