@@ -4,7 +4,10 @@ import {
   getTransactionsMonthly,
   getTransactionsSummary,
 } from "../services/transactionService";
-import type { MonthlyItem, TransactionSummary } from "../types/transactions";
+import type {
+  MonthlyItem,
+  TransactionSummary,
+} from "../types/transactions";
 import Card from "../components/Card";
 import {
   BanknoteArrowDown,
@@ -49,6 +52,49 @@ type ExpenseByCategory = {
   amount: number;
 };
 
+type SummaryApiResponse =
+  | TransactionSummary
+  | { data: TransactionSummary };
+
+type MonthlyApiResponse =
+  | MonthlyItem[]
+  | { history: MonthlyItem[] }
+  | { data: MonthlyItem[] }
+  | { data: { history: MonthlyItem[] } };
+
+const isTransactionSummary = (
+  value: SummaryApiResponse,
+): value is TransactionSummary => {
+  return "totalExpenses" in value && "expensesByCategory" in value;
+};
+
+const extractSummary = (resp: SummaryApiResponse): TransactionSummary => {
+  const maybeData = "data" in resp ? resp.data : resp;
+  if (isTransactionSummary(maybeData)) {
+    return maybeData;
+  }
+  return initialSummary;
+};
+
+const extractMonthlyHistory = (resp: MonthlyApiResponse): MonthlyItem[] => {
+  if (Array.isArray(resp)) {
+    return resp;
+  }
+  if ("history" in resp && Array.isArray(resp.history)) {
+    return resp.history;
+  }
+  if ("data" in resp) {
+    const data = resp.data;
+    if (Array.isArray(data)) {
+      return data;
+    }
+    if ("history" in data && Array.isArray(data.history)) {
+      return data.history;
+    }
+  }
+  return [];
+};
+
 const Dashboard = () => {
   const currentDate = new Date();
   const [year, setYear] = useState<number>(currentDate.getFullYear());
@@ -58,12 +104,19 @@ const Dashboard = () => {
 
   useEffect(() => {
     async function loadTransactionsSummary() {
-      const response = await getTransactionsSummary(month, year);
+      const response = (await getTransactionsSummary(
+        month,
+        year,
+      )) as SummaryApiResponse;
+
+      const data = extractSummary(response);
 
       setSummary({
-        ...response,
-        expensesByCategory: Array.isArray(response.expensesByCategory)
-          ? response.expensesByCategory
+        ...data,
+        expensesByCategory: Array.isArray(
+          data.expensesByCategory,
+        )
+          ? data.expensesByCategory
           : [],
       });
     }
@@ -73,10 +126,14 @@ const Dashboard = () => {
 
   useEffect(() => {
     async function loadTransactionsMonthly() {
-      const response = await getTransactionsMonthly(month, year, 5);
-      setMonthlyItemData(
-        Array.isArray(response.history) ? response.history : [],
-      );
+      const response = (await getTransactionsMonthly(
+        month,
+        year,
+        5,
+      )) as MonthlyApiResponse;
+
+      const history = extractMonthlyHistory(response);
+      setMonthlyItemData(history);
     }
 
     loadTransactionsMonthly();
